@@ -1,0 +1,13 @@
+diff --git a/node_modules/workbox-build/build/lib/get-string-hash.js b/node_modules/workbox-build/build/lib/get-string-hash.js
+index 05ede8e..d5dafe1 100644
+--- a/node_modules/workbox-build/build/lib/get-string-hash.js
++++ b/node_modules/workbox-build/build/lib/get-string-hash.js
+@@ -11,6 +11,6 @@ const crypto = require('crypto');
+ 
+ module.exports = string => {
+   const md5 = crypto.createHash('md5');
+-  md5.update(string);
++  md5.update(string.toString('utf8'), 'utf8');
+   return md5.digest('hex');
+ };
+\ No newline at end of file

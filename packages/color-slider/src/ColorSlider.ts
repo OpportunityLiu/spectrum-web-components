@@ -323,6 +323,12 @@ export class ColorSlider extends Focusable {
         this.handlePointermove(event);
     }
 
+    private handlePositionStyles(): string {
+        return `${this.vertical ? 'top' : 'left'}: ${
+            this.sliderHandlePosition
+        }%`;
+    }
+
     protected render(): TemplateResult {
         return html`
             <div
@@ -344,8 +350,7 @@ export class ColorSlider extends Focusable {
                 class="handle"
                 color="hsl(${this._color.toHsl().h}, 100%, 50%)"
                 ?disabled=${this.disabled}
-                style="${this.vertical ? 'top' : 'left'}: ${this
-                    .sliderHandlePosition}%"
+                style=${this.handlePositionStyles}
                 @manage=${streamingListener(
                     { type: 'pointerdown', fn: this.handlePointerdown },
                     { type: 'pointermove', fn: this.handlePointermove },
