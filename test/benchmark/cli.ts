@@ -202,6 +202,7 @@ $ node test/benchmark/cli -n 20
                         label: 'remote',
                         dependencies: {
                             '@spectrum-web-components/bundle': opts.compare,
+                            '@spectrum-web-components/top-nav': opts.compare,
                         },
                     },
                     measurement: 'global',

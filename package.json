@@ -48,7 +48,7 @@
         "postdocs:analyze": "node ./scripts/add-custom-properties.js --src='documentation/custom-elements.json'",
         "postdocs:build": "cp documentation/favicon.ico documentation/dist",
         "postdocs:ci": "cp documentation/favicon.ico documentation/dist && cp documentation/custom-elements.json documentation/dist/storybook",
-        "postinstall": "yarn get-ready",
+        "postinstall": "patch-package && yarn get-ready",
         "postprocess-spectrum": "pretty-quick --pattern \"packages/**/*.css\"",
         "precustom-element-json": "lerna exec --ignore '{@spectrum-web-components/{base,bundle,iconset,modal,shared,styles},example-project-rollup,example-project-webpack,swc-templates}' -- rm custom-elements.json ||:",
         "predocs:ts": "rm -f documentation/components/searchIndex.json && cp documentation/components/_searchIndex.json documentation/components/searchIndex.json",
@@ -153,9 +153,8 @@
         "husky": "^5.1.3",
         "lerna": "^3.20.2",
         "linebyline": "^1.3.0",
+        "lit": "^2.0.0-rc.1",
         "lit-analyzer": "^1.2.1",
-        "lit-element": "^2.4.0",
-        "lit-html": "^1.0.0",
         "lodash": "^4.17.15",
         "lunr": "^2.3.8",
         "markdown-loader": "^5.1.0",
@@ -165,6 +164,7 @@
         "netlify-cli": "^3.13.1",
         "node-fetch": "^2.6.0",
         "npm-run-all": "^4.1.5",
+        "patch-package": "6.4.7",
         "playwright": "^1.9.2",
         "plugin-error": "^1.0.1",
         "pngjs": "^6.0.0",
@@ -197,7 +197,7 @@
         "stylelint": "^13.12.0",
         "stylelint-config-prettier": "^8.0.2",
         "stylelint-config-standard": "^21.0.0",
-        "tachometer": "^0.5.8",
+        "tachometer": "^0.5.9",
         "ts-loader": "^8.0.0",
         "typescript": "^4.2.3",
         "walker": "^1.0.7",
@@ -211,7 +211,9 @@
         "yargs": "^16.2.0"
     },
     "resolutions": {
-        "cssnano/**/postcss-calc": "7.0.0"
+        "cssnano/**/postcss-calc": "7.0.0",
+        "lit-element": "3.0.0-rc.1",
+        "lit-html": "2.0.0-rc.2"
     },
     "workspaces": [
         "packages/*",
