@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import { playwrightLauncher } from '@web/test-runner-playwright';
 import { a11ySnapshotPlugin } from './test/a11y-snapshot-plugin.js';
 import { sendKeysPlugin } from './test/send-keys-plugin.js';
+import { setViewportPlugin } from '@web/test-runner-commands/plugins';
 import {
     packages,
     vrtGroups,
@@ -23,6 +24,7 @@ export default {
         sendKeysPlugin(),
         a11ySnapshotPlugin(),
         configuredVisualRegressionPlugin(),
+        setViewportPlugin(),
     ],
     nodeResolve: true,
     concurrency: 4,

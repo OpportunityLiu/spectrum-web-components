@@ -96,6 +96,10 @@ sp-theme,
     pointer-events: none;
 }
 
+:host(:not([animating])) ::slotted(*) {
+    pointer-events: all;
+}
+
 #contents ::slotted(*) {
     position: relative;
 }

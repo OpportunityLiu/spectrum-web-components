@@ -85,7 +85,9 @@ export const findAccessibilityNode = <TNode>(
             child as TNode & { children: TNode[] },
             test
         );
-        return foundNode;
+        if (foundNode) {
+            return foundNode;
+        }
     }
     return null;
 };

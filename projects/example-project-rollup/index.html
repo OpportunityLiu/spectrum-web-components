@@ -11,41 +11,61 @@
 
     <title>example-app</title>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      sp-combobox:not(:defined) {
+        display: block;
+        height: 5em;
+        background: blue;
+      }
+    </style>
   </head>
 
   <body>
-    <sp-button variant="primary">Primary</sp-button>
-    <br /><br />
-    <sp-button variant="secondary" quiet>secondary</sp-button>
-    <br /><br />
-    <sp-field-label for="picker">Where do you live?</sp-field-label>
-    <sp-picker id="picker">
-      <span slot="label">
-        Select a Country with a very long label, too long in fact
-      </span>
-      <sp-menu-item> Deselect </sp-menu-item>
-      <sp-menu-item> Select Inverse </sp-menu-item>
-      <sp-menu-item> Feather... </sp-menu-item>
-      <sp-menu-item> Select and Mask... </sp-menu-item>
-      <sp-menu-divider></sp-menu-divider>
-      <sp-menu-item> Save Selection </sp-menu-item>
-      <sp-menu-item disabled> Make Work Path </sp-menu-item>
-    </sp-picker>
-
-    <sp-picker dir="rtl">
-      <span slot="label">
-        Select a Country with a very long label, too long in fact
-      </span>
-      <sp-menu dir="rtl">
-        <sp-menu-item dir="rtl"> Deselect </sp-menu-item>
-        <sp-menu-item dir="rtl"> Select Inverse </sp-menu-item>
-        <sp-menu-item dir="rtl"> Feather... </sp-menu-item>
-        <sp-menu-item dir="rtl"> Select and Mask... </sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item dir="rtl"> Save Selection </sp-menu-item>
-        <sp-menu-item disabled dir="rtl"> Make Work Path </sp-menu-item>
-      </sp-menu>
-    </sp-picker>
+    <sp-theme scale="large" color="light">
+      <sp-button variant="primary">Primary</sp-button>
+      <br /><br />
+      <sp-button variant="secondary" quiet>secondary</sp-button>
+      <br /><br />
+      <sp-combobox
+        label="Combobox Label"
+        options='[{"value": "Pineapple", "id": "pineapple"},{"value": "Yuzu", "id": "yuzu"},{"value": "Kumquat", "id": "kumquat"}]'
+      >
+        What's your favorite fruit?
+        <!-- <sp-combobox-item value="pineapple">Pineapple</sp-combobox-item>
+          <sp-combobox-item value="yuzu">Yuzu</sp-combobox-item>
+          <sp-combobox-item value="kumquat">Kumquat</sp-combobox-item>
+          <sp-combobox-item value="lychee">Lychee</sp-combobox-item>
+          <sp-combobox-item value="durian">Durian</sp-combobox-item> -->
+      </sp-combobox>
+      <!-- <sp-field-label for="picker">Where do you live?</sp-field-label>
+        <sp-picker id="picker">
+          <span slot="label">
+            Select a Country with a very long label, too long in fact
+          </span>
+          <sp-menu-item> Deselect </sp-menu-item>
+          <sp-menu-item> Select Inverse </sp-menu-item>
+          <sp-menu-item> Feather... </sp-menu-item>
+          <sp-menu-item> Select and Mask... </sp-menu-item>
+          <sp-menu-divider></sp-menu-divider>
+          <sp-menu-item> Save Selection </sp-menu-item>
+          <sp-menu-item disabled> Make Work Path </sp-menu-item>
+        </sp-picker>
+    
+        <sp-picker dir="rtl">
+          <span slot="label">
+            Select a Country with a very long label, too long in fact
+          </span>
+          <sp-menu dir="rtl">
+            <sp-menu-item dir="rtl"> Deselect </sp-menu-item>
+            <sp-menu-item dir="rtl"> Select Inverse </sp-menu-item>
+            <sp-menu-item dir="rtl"> Feather... </sp-menu-item>
+            <sp-menu-item dir="rtl"> Select and Mask... </sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item dir="rtl"> Save Selection </sp-menu-item>
+            <sp-menu-item disabled dir="rtl"> Make Work Path </sp-menu-item>
+          </sp-menu>
+        </sp-picker> -->
+    </sp-theme>
 
     <script type="module" src="./out-tsc/src/example-app.js"></script>
   </body>
