@@ -23,6 +23,12 @@ function hasModifier(event: MouseEvent): boolean {
     return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
+interface ManagedOverlayContent {
+    open: boolean;
+    overlayThrowCallback?: (args: { trigger: HTMLElement }) => void;
+    overlayReturnCallback?: (args: { trigger: HTMLElement }) => void;
+}
+
 export class OverlayStack {
     public overlays: ActiveOverlay[] = [];
 
@@ -152,9 +158,7 @@ export class OverlayStack {
 
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
         return this.overlays.some(
-            (item) =>
-                trigger === item.trigger &&
-                item.interaction === 'click'
+            (item) => trigger === item.trigger && item.interaction === 'click'
         );
     }
 
@@ -206,11 +210,13 @@ export class OverlayStack {
                 this.overlays.push(activeOverlay);
                 await activeOverlay.updateComplete;
                 this.addOverlayEventListeners(activeOverlay);
-                const contentWithOpen = (activeOverlay.overlayContent as unknown) as {
-                    open: boolean;
-                };
+                const contentWithOpen = (activeOverlay.overlayContent as unknown) as ManagedOverlayContent;
                 if (typeof contentWithOpen.open !== 'undefined') {
                     contentWithOpen.open = true;
+                }
+                if (contentWithOpen.overlayThrowCallback) {
+                    const { trigger } = activeOverlay;
+                    contentWithOpen.overlayThrowCallback({ trigger });
                 }
                 if (details.receivesFocus === 'auto') {
                     activeOverlay.focus();
@@ -337,11 +343,13 @@ export class OverlayStack {
     ): Promise<void> {
         if (overlay) {
             await overlay.hide(animated);
-            const contentWithOpen = (overlay.overlayContent as unknown) as {
-                open: boolean;
-            };
+            const contentWithOpen = (overlay.overlayContent as unknown) as ManagedOverlayContent;
             if (typeof contentWithOpen.open !== 'undefined') {
                 contentWithOpen.open = false;
+            }
+            if (contentWithOpen.overlayReturnCallback) {
+                const { trigger } = overlay;
+                contentWithOpen.overlayReturnCallback({ trigger });
             }
             if (overlay.state != 'dispose') return;
 

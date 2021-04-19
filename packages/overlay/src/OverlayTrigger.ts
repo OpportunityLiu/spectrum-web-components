@@ -265,7 +265,7 @@ export class OverlayTrigger extends LitElement {
         const { targetContent, longpressContent } = this;
         this.prepareToFocusOverlayContent(longpressContent);
         const notImmediatelyClosable =
-            this._longpressEvent?.detail.source !== 'keyboard';
+            this._longpressEvent?.detail?.source !== 'keyboard';
         this.closeLongpressOverlay = await OverlayTrigger.openOverlay(
             targetContent,
             this.type ? this.type : 'longpress',
