@@ -10,16 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const config = {
-    spectrum: '{{spectrum}}',
-    components: [
-        {
-            name: '{{ name }}',
-            host: {
-                selector: '.spectrum-{{className name}}',
-            },
-        },
-    ],
-};
+import { NumberField } from './src/NumberField.js';
 
-export default config;
+customElements.define('sp-number-field', NumberField);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-number-field': NumberField;
+    }
+}

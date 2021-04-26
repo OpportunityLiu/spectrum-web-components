@@ -10,16 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const config = {
-    spectrum: '{{spectrum}}',
-    components: [
-        {
-            name: '{{ name }}',
-            host: {
-                selector: '.spectrum-{{className name}}',
-            },
-        },
-    ],
-};
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
-export default config;
+import '../sp-number-field.js';
+import { NumberField } from '..';
+
+describe('NumberField', () => {
+    it('loads default number-field accessibly', async () => {
+        const el = await fixture<NumberField>(
+            html`
+                <sp-number-field></sp-number-field>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+});
