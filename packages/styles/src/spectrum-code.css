@@ -26,19 +26,19 @@ strong {
         var(--spectrum-global-font-weight-bold)
     );
 }
-.spectrum-Code-emphasis,
+.spectrum-Code-emphasized,
 em {
-    /* .spectrum-Code .spectrum-Code-emphasis,
+    /* .spectrum-Code .spectrum-Code-emphasized,
    * .spectrum-Code em */
     font-style: var(
-        --spectrum-code-m-emphasis-text-font-style,
+        --spectrum-code-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Code--serif {
     /* .spectrum-Code--serif */
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }
@@ -133,7 +133,7 @@ em {
     /* .spectrum-Code--sizeS */
     font-size: var(
         --spectrum-code-s-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-code-s-text-font-weight,

@@ -12,9 +12,6 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Switch */
-    --spectrum-switch-handle-border-radius: var(
-        --spectrum-switch-m-handle-border-radius
-    );
     --spectrum-switch-handle-border-size: var(
         --spectrum-switch-m-handle-border-size,
         var(--spectrum-alias-border-size-thick)
@@ -42,6 +39,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-switch-handle-size: var(
         --spectrum-switch-m-handle-size,
         var(--spectrum-alias-item-control-2-size-m)
+    );
+    --spectrum-switch-handle-border-radius: var(
+        --spectrum-switch-m-handle-border-radius,
+        var(--spectrum-alias-item-control-3-border-radius-m)
     );
     --spectrum-switch-text-gap: var(
         --spectrum-switch-m-text-gap,
@@ -350,7 +351,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-m-track-color-selected-disabled,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-global-color-gray-300)
     );
 }
 :host([disabled][checked][dir]) #input + #switch:before {
@@ -415,7 +416,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
     box-shadow: 0 0 0
         var(
-            --spectrum-switch-m-focus-ring-size-key-focus,
+            --spectrum-switch-m-focus-ring-size,
             var(--spectrum-alias-focus-ring-size)
         )
         var(

@@ -185,7 +185,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     background: var(
         --spectrum-colorhandle-fill-color-disabled,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-track-color-disabled)
     );
     box-shadow: none;
 }

@@ -54,9 +54,9 @@
         "@spectrum-web-components/base": "^0.4.3"
     },
     "devDependencies": {
-        "@spectrum-css/commons": "^3.0.2",
-        "@spectrum-css/typography": "^3.0.2",
-        "@spectrum-css/vars": "^3.0.2"
+        "@spectrum-css/commons": "beta",
+        "@spectrum-css/typography": "beta",
+        "@spectrum-css/vars": "beta"
     },
     "sideEffects": [
         "./*.css"

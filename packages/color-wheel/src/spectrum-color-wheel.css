@@ -110,7 +110,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host {
     /* .spectrum-ColorWheel */
-    --spectrum-colorwheel-border-color: var(--spectrum-colorarea-border-color);
+    --spectrum-colorwheel-border-color: var(
+        --spectrum-colorarea-border-color,
+        var(--spectrum-alias-track-color-disabled)
+    );
 }
 :host([disabled]) .innerCircle,
 :host([disabled]) .outerCircle {
@@ -118,14 +121,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ColorWheel.is-disabled .spectrum-ColorWheel-outerCircle */
     stroke: var(
         --spectrum-colorwheel-border-color-disabled,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-border-color-translucent)
     );
 }
 :host([disabled]) .outerCircle {
     /* .spectrum-ColorWheel.is-disabled .spectrum-ColorWheel-outerCircle */
     fill: var(
         --spectrum-colorwheel-fill-color-disabled,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-border-color-transparent)
     );
 }
 :host([disabled]) .segment {
@@ -134,13 +137,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 ::slotted([slot='gradient']) {
     /* .spectrum-ColorWheel-gradient */
-    border-color: var(--spectrum-colorwheel-border-color);
+    border-color: var(
+        --spectrum-colorwheel-border-color,
+        var(--spectrum-alias-track-color-disabled)
+    );
 }
 .innerCircle,
 .outerCircle {
     /* .spectrum-ColorWheel-innerCircle,
    * .spectrum-ColorWheel-outerCircle */
-    stroke: var(--spectrum-colorwheel-border-color);
+    stroke: var(
+        --spectrum-colorwheel-border-color,
+        var(--spectrum-alias-track-color-disabled)
+    );
 }
 @media (forced-colors: active) {
     :host {
