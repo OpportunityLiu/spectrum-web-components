@@ -80,12 +80,17 @@ describe('Slider', () => {
         expect(el.value).to.equal(20);
     });
     it('accepts keyboard events', async () => {
-        const el = await fixture<Slider>(tick());
+        const el = await fixture<Slider>(
+            tick({
+                variant: 'tick',
+                tickStep: 5,
+            })
+        );
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(10);
-        expect(el.handleHighlight).to.be.false;
+        expect(el.highlight).to.be.false;
 
         el.focus();
         await sendKeys({
@@ -94,14 +99,14 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(9);
-        expect(el.handleHighlight).to.be.true;
+        expect(el.highlight).to.be.true;
         await sendKeys({
             press: 'ArrowUp',
         });
         await elementUpdated(el);
 
         expect(el.value).to.equal(10);
-        expect(el.handleHighlight).to.be.true;
+        expect(el.highlight).to.be.true;
     });
     it('accepts pointer events', async () => {
         let pointerId = -1;
@@ -114,10 +119,10 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.dragging).to.be.false;
-        expect(el.handleHighlight).to.be.false;
+        expect(el.highlight).to.be.false;
         expect(pointerId).to.equal(-1);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
         handle.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
@@ -153,7 +158,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.dragging).to.be.false;
-        expect(el.handleHighlight).to.be.false;
+        expect(el.highlight).to.be.false;
         expect(pointerId, '3').to.equal(2);
 
         handle.dispatchEvent(
@@ -194,7 +199,7 @@ describe('Slider', () => {
         const controls = el.shadowRoot.querySelector(
             '#controls'
         ) as HTMLDivElement;
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
         handle.releasePointerCapture = (id: number) => (pointerId = id);
 
@@ -275,7 +280,7 @@ describe('Slider', () => {
         expect(pointerId).to.equal(-1);
         expect(el.value).to.equal(10);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
 
         handle.dispatchEvent(
@@ -317,7 +322,7 @@ describe('Slider', () => {
 
         expect(el.value).to.equal(10);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         await executeServerCommand('send-mouse', {
             steps: [
                 {
@@ -332,7 +337,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.dragging, 'is dragging').to.be.true;
-        expect(el.handleHighlight, 'not highlighted').to.be.false;
+        expect(el.highlight, 'not highlighted').to.be.false;
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -363,7 +368,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(10);
         expect(inputSpy.callCount).to.equal(0);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
         handle.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
@@ -377,7 +382,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.dragging).to.be.true;
-        expect(el.handleHighlight).to.be.false;
+        expect(el.highlight).to.be.false;
         expect(pointerId, 'pointer id').to.equal(1);
 
         handle.dispatchEvent(
@@ -414,7 +419,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(10);
         expect(el.dragging).to.be.false;
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -523,7 +528,8 @@ describe('Slider', () => {
                     value="50"
                     min="0"
                     max="100"
-                    .getAriaValueText=${(value: number) => `${value}%`}
+                    .getAriaValueText=${(values: Map<string, string>) =>
+                        `${values.get('value')}%`}
                 ></sp-slider>
             `
         );

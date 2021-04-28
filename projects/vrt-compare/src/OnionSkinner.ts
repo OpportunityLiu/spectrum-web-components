@@ -32,7 +32,7 @@ export class OnionSkinner extends SpectrumElement {
     private rightThumbnail?: HTMLImageElement;
 
     private handleOnionInput(event: Event & { target: Slider }) {
-        this.onionLevel = event.target.value;
+        this.onionLevel = event.target.value as number;
     }
 
     private handleSlotchange() {

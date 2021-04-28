@@ -12,21 +12,61 @@ governing permissions and limitations under the License.
 import { html } from 'lit-html';
 
 import '../sp-slider.js';
-import { Slider } from '../';
+import { Slider, SliderHandle, HandleValues, variants } from '../';
 import { TemplateResult } from '@spectrum-web-components/base';
+import { spreadProps } from '@open-wc/lit-helpers';
 
-const action = (msg1: string) => (msg2: string | number): void =>
-    console.log(msg1, msg2);
+const action = (msg1: string) => (msg2: string | HandleValues): void => {
+    const message =
+        typeof msg2 === 'string' ? msg2 : JSON.stringify(msg2, null, 2);
+    console.log(msg1, message);
+};
 
 export default {
     component: 'sp-slider',
     title: 'Slider',
+    argTypes: {
+        variant: {
+            name: 'Variant',
+            description: 'Determines the style of slider.',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: undefined },
+            },
+            control: {
+                type: 'inline-radio',
+                options: [undefined, ...variants],
+            },
+        },
+        tickStep: {
+            name: 'Tick Step',
+            description: 'Tick spacing on slider.',
+            table: {
+                type: { summary: 'number' },
+                defaultValue: { summary: 0.1 },
+            },
+            control: {
+                type: 'number',
+            },
+        },
+    },
+    args: {
+        variant: undefined,
+        tickStep: 0.1,
+    },
 };
 
-export const Default = (): TemplateResult => {
+interface StoryArgs {
+    variant?: string;
+    tickStep?: number;
+}
+
+export const Default = (args: StoryArgs): TemplateResult => {
     const handleEvent = (event: Event): void => {
         const target = event.target as Slider;
-        action(event.type)(target.value);
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
     };
     return html`
         <div style="width: 500px; margin: 12px 20px;">
@@ -37,10 +77,8 @@ export const Default = (): TemplateResult => {
                 step="0.01"
                 @input=${handleEvent}
                 @change=${handleEvent}
-                .getAriaValueText=${(value: number) =>
-                    new Intl.NumberFormat('en-US', { style: 'percent' }).format(
-                        value
-                    )}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
             >
                 Opacity
             </sp-slider>
@@ -48,10 +86,12 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const Gradient = (): TemplateResult => {
+export const Gradient = (args: StoryArgs): TemplateResult => {
     const handleEvent = (event: Event): void => {
         const target = event.target as Slider;
-        action(event.type)(target.value);
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
     };
     return html`
         <div
@@ -70,24 +110,32 @@ export const Gradient = (): TemplateResult => {
                 id="opacity-slider"
                 @input=${handleEvent}
                 @change=${handleEvent}
+                ...=${spreadProps(args)}
             ></sp-slider>
         </div>
     `;
 };
+Gradient.args = {
+    variant: undefined,
+};
 
-export const tick = (): TemplateResult => {
+export const tick = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-slider
             label="Slider Label"
             variant="tick"
-            tick-step="5"
             min="0"
             max="92"
+            ...=${spreadProps(args)}
         ></sp-slider>
     `;
 };
+tick.args = {
+    variant: 'tick',
+    tickStep: 5,
+};
 
-export const Disabled = (): TemplateResult => {
+export const Disabled = (args: StoryArgs): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -97,12 +145,122 @@ export const Disabled = (): TemplateResult => {
                 min="0"
                 max="20"
                 label="Intensity"
+                ...=${spreadProps(args)}
             ></sp-slider>
         </div>
     `;
 };
 
-export const focusTabDemo = (): TemplateResult => {
+export const ExplicitHandle = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as SliderHandle;
+        if (target.value != null) {
+            if (typeof target.value === 'object') {
+                action(event.type)(target.value);
+            } else {
+                action(event.type)(`${target.name}: ${target.value}`);
+            }
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                step="0.5"
+                min="0"
+                max="20"
+                label="Intensity"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                ...=${spreadProps(args)}
+            >
+                <sp-slider-handle slot="handle" value="5"></sp-slider-handle slot="handle">
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const TwoHandles = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as SliderHandle;
+        if (target.value != null) {
+            if (typeof target.value === 'object') {
+                action(event.type)(target.value);
+            } else {
+                action(event.type)(`${target.name}: ${target.value}`);
+            }
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                value="5"
+                step="1"
+                min="0"
+                max="255"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                ...=${spreadProps(args)}
+            >
+                Output Levels
+                <sp-slider-handle slot="handle" name="min" value="5"></sp-slider-handle slot="handle">
+                <sp-slider-handle slot="handle" name="max" value="250"></sp-slider-handle slot="handle">
+            </sp-slider>
+        </div>
+    `;
+};
+TwoHandles.args = {
+    variant: 'range',
+    tickStep: 10,
+};
+
+export const ThreeHandlesOrdered = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as SliderHandle;
+        if (target.value != null) {
+            if (typeof target.value === 'object') {
+                action(event.type)(target.value);
+            } else {
+                action(event.type)(`${target.name}: ${target.value}`);
+            }
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                value="5"
+                step="1"
+                min="0"
+                max="255"
+                label="Output Levels"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                ...=${spreadProps(args)}
+            >
+                <sp-slider-handle slot="handle"
+                    name="low"
+                    value="5"
+                    max="next"
+                ></sp-slider-handle slot="handle">
+                <sp-slider-handle slot="handle"
+                    name="mid"
+                    value="100"
+                    min="previous"
+                    max="next"
+                ></sp-slider-handle slot="handle">
+                <sp-slider-handle slot="handle"
+                    name="high"
+                    value="250"
+                    min="previous"
+                ></sp-slider-handle slot="handle">
+            </sp-slider>
+        </div>
+    `;
+};
+ThreeHandlesOrdered.args = {
+    tickStep: 10,
+};
+
+export const focusTabDemo = (args: StoryArgs): TemplateResult => {
     const value = 50;
     const min = 0;
     const max = 100;
@@ -116,6 +274,7 @@ export const focusTabDemo = (): TemplateResult => {
                 max="${max}"
                 label="Opacity"
                 id="opacity-slider-opacity"
+                ...=${spreadProps(args)}
             ></sp-slider>
         </div>
         <div style="width: 500px; margin: 20px;">
@@ -126,6 +285,7 @@ export const focusTabDemo = (): TemplateResult => {
                 max="${max}"
                 label="Lightness"
                 id="opacity-slider-lightness"
+                ...=${spreadProps(args)}
             ></sp-slider>
         </div>
         <div style="width: 500px; margin: 20px 20px 12px;">
@@ -136,6 +296,7 @@ export const focusTabDemo = (): TemplateResult => {
                 max="${max}"
                 label="Saturation"
                 id="opacity-slider-saturation"
+                ...=${spreadProps(args)}
             ></sp-slider>
         </div>
     `;

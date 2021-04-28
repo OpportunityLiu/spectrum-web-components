@@ -10,11 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { Slider } from './src/Slider.js';
+import { SliderHandle } from './src/SliderHandle.js';
 
 customElements.define('sp-slider', Slider);
+customElements.define('sp-slider-handle', SliderHandle);
 
 declare global {
     interface HTMLElementTagNameMap {
         'sp-slider': Slider;
+        'sp-slider-handle': SliderHandle;
     }
 }

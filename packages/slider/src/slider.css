@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 
 @import './spectrum-slider.css';
 
-/* 
+/*
  * Removes blue outline from :host when it is being focused.
  * This situation is not addressed in spectrum-css because the slider element itself
- * is not intended to receive focus. 
+ * is not intended to receive focus.
  * This is not the case with web-components. The :host will receive focus when
  * interacting with the slider via the mouse.
 */
@@ -58,14 +58,6 @@ governing permissions and limitations under the License.
     background-size: var(--spectrum-slider-track-background-size) !important;
 }
 
-:host([dir='ltr']) #track-right:before {
-    background-position: 100%;
-}
-
-:host([dir='rtl']) #track-left:before {
-    background-position: 100%;
-}
-
 :host([dir='ltr']) .track:before {
     background: var(
         --spectrum-slider-track-color,
@@ -82,4 +74,31 @@ governing permissions and limitations under the License.
             var(--spectrum-global-color-gray-300)
         )
     );
+}
+
+:host([dir='ltr']) .track:last-of-type:before {
+    background-position: 100%;
+}
+
+:host([dir='rtl']) .track:first-of-type:before {
+    background-position: 100%;
+}
+
+.track:not(:first-of-type):not(:last-of-type) {
+    padding-left: calc(
+        var(--spectrum-slider-handle-width) / 2 +
+            var(--spectrum-slider-track-handleoffset)
+    ) !important;
+    padding-right: calc(
+        var(--spectrum-slider-handle-width) / 2 +
+            var(--spectrum-slider-track-handleoffset)
+    ) !important;
+}
+
+:host([dir='ltr']) .track:not(:first-of-type):not(:last-of-type) {
+    left: var(--spectrum-slider-track-segment-position);
+}
+
+:host([dir='rtl']) .track:not(:first-of-type):not(:last-of-type) {
+    right: var(--spectrum-slider-track-segment-position);
 }
