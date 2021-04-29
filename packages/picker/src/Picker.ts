@@ -253,17 +253,19 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     private async openMenu(): Promise<void> {
         /* c8 ignore next 9 */
-        let reparentableChildren: Element[] = [];
+        let reparentableChildren: MenuItem[] = [];
 
         const deprecatedMenu = this.querySelector('sp-menu');
         if (deprecatedMenu) {
-            reparentableChildren = Array.from(deprecatedMenu.children);
+            reparentableChildren = Array.from(
+                deprecatedMenu.children
+            ) as MenuItem[];
         } else {
             reparentableChildren = Array.from(this.children).filter(
                 (element) => {
                     return !element.hasAttribute('slot');
                 }
-            );
+            ) as MenuItem[];
         }
 
         if (reparentableChildren.length === 0) {
@@ -271,9 +273,14 @@ export class PickerBase extends SizedMixin(Focusable) {
             return;
         }
 
-        this.restoreChildren = reparentChildren(
+        this.restoreChildren = reparentChildren<MenuItem>(
             reparentableChildren,
-            this.optionsMenu
+            this.optionsMenu,
+            () => {
+                return (el) => {
+                    el.focused = false;
+                };
+            }
         );
 
         this.optionsMenu.selectable = true;
