@@ -167,7 +167,7 @@ export class Menu extends SpectrumElement {
         }
         // if there are no non-disabled items, skip the work to focus a child
         if (!itemToFocus.disabled) {
-            itemToFocus.focused = true;
+            this.forwardFocusVisibleToitem(itemToFocus);
             this.setAttribute('aria-activedescendant', itemToFocus.id);
         }
         return itemToFocus;
@@ -220,9 +220,21 @@ export class Menu extends SpectrumElement {
         this.updateSelectedItemIndex();
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         if ((this.getRootNode() as Document).activeElement === this) {
-            focusInItem.focused = true;
+            this.forwardFocusVisibleToitem(focusInItem);
         }
     };
+
+    private forwardFocusVisibleToitem(item: MenuItem): void {
+        let shouldFocus = false;
+        try {
+            shouldFocus =
+                this.matches(':focus-visible') ||
+                this.matches('.focus-visible');
+        } catch (error) {
+            shouldFocus = this.matches('.focus-visible');
+        }
+        item.focused = shouldFocus;
+    }
 
     public render(): TemplateResult {
         return html`
